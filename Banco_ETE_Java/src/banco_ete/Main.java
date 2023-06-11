@@ -11,21 +11,21 @@ public class Main {
 		double saldoCc = 0.0, saldoCp = 0.0, depositoCc, depositoCp, saqueCc, saqueCp;
 		String nomeDoUsuario = "";
 
-		do {
+		Scanner sc = new Scanner(System.in);
 
-			Scanner sc = new Scanner(System.in);
+		do {
 
 			int menu;
 
 			System.out.println("-----------------------------------------\n");
 			System.out.println("|\t   Bem vindo ao Banco ETE\t|\n");
-			System.out.println("|Escolha uma opção:\t\t\t|\n");
+			System.out.println("|Escolha uma opcao:\t\t\t|\n");
 			System.out.println("|1: Criar uma conta\t\t\t|\n");
 			System.out.println("|2: Mostrar saldo\t\t\t|\n");
 			System.out.println("|3: Depositar na Conta corrente\t\t|\n");
 			System.out.println("|4: Sacar na Conta corrente\t\t|\n");
-			System.out.println("|5: Aplicar na Conta poupança\t\t|\n");
-			System.out.println("|6: Resgatar da Conta poupança\t\t|\n");
+			System.out.println("|5: Aplicar na Conta poupanca\t\t|\n");
+			System.out.println("|6: Resgatar da Conta poupanca\t\t|\n");
 			System.out.println("|7: Exibir contas\t\t\t|\n");
 			System.out.println("|0: Para sair\t\t\t\t|\n");
 			System.out.println("-----------------------------------------\n");
@@ -35,148 +35,159 @@ public class Main {
 			case 1:
 				if (nomeDoUsuario == "") {
 					System.out.println("Digite seu nome: ");
-					nomeDoUsuario = sc.next();
+					sc.nextLine();
+					nomeDoUsuario = sc.nextLine();
 
-					System.out.println("Digite o número de sua agência: ");
+					System.out.println("Digite o numero de sua agencia: ");
 					ag = sc.nextInt();
 
-					System.out.println("Digite o número da sua conta: ");
+					System.out.println("Digite o numero da sua conta: ");
 					conta = sc.nextInt();
 
 					System.out.println("\nBem vindo ao Banco ETE: " + nomeDoUsuario + "\n");
-					System.out.println("Sua agência é : " + ag + "\n");
-					System.out.println("Sua conta corrente é a: " + conta + "-" + dvcc + "\n");
-					System.out.println("Sua conta poupança é a: " + conta + "-" + dvcp + "\n");
+					System.out.println("Sua agencia e: " + ag + "\n");
+					System.out.println("Sua conta corrente e: " + conta + "-" + dvcc + "\n");
+					System.out.println("Sua conta poupanca e: " + conta + "-" + dvcp + "\n");
 
 					autenticado = true;
 
 					int depositoInicial = 0;
-					System.out.println("\nVocê deseja fazer um depósito inicial? 1: Sim, 2: Não: ");
+					System.out.println("\nVoce deseja fazer um deposito inicial? 1: Sim, 2: Nao: ");
 					depositoInicial = sc.nextInt();
 
 					// Estrutura condicional baseada na resposta do usuário
 					switch (depositoInicial) {
 					case 1:
-						System.out.println("\nDigite o valor do depósito: R$");
-						saldoCc = sc.nextDouble();
+						System.out.println("\nDigite o valor do deposito: R$");
+						depositoCc = sc.nextDouble();
 
-						System.out.println("Seu saldo atual é: \n" + "Conta corrente: R$" + saldoCc
-								+ "\tConta poupança: R$" + saldoCp + "\n");
+						if (depositoCc > 0) {
+							saldoCc += depositoCc;
+							depositoCc = 0.0;
+							System.out.println("Seu saldo atual e: \n" + "Conta corrente: R$" + saldoCc
+									+ "\tConta poupanca: R$" + saldoCp + "\n");
+						} else {
+							System.out.println("O valor de deposito deve ser maior que zero.");
+						}
 						break;
 
 					case 2:
-						System.out.println("Tudo bem, escolha uma opção de nosso menu \n\n");
+						System.out.println("Tudo bem, escolha uma opcao de nosso menu \n\n");
 						break;
 					}
 				} else {
 					System.out.println(
-							"Desculpe, você já possui uma conta, é permitido apenas um usuário por execução \n\n");
+							"Desculpe, voce ja possui uma conta, e permitido apenas um usuario por execucao \n\n");
 				}
 				break;
 
 			case 2:
 				// Verificação de autenticação do usuário
 				if (autenticado == true) {
-					System.out.println("Seu saldo atual na Conta corrente é: R$" + saldoCc + "\n");
-					System.out.println("Seu saldo atual na Conta poupança é: R$" + saldoCp + "\n");
+					System.out.println("Seu saldo atual na Conta corrente e: R$" + saldoCc + "\n");
+					System.out.println("Seu saldo atual na Conta poupanca e: R$" + saldoCp + "\n");
 				} else {
 					System.out
-							.println("Desculpe, você precisa criar uma conta, antes de realizar qualquer operação!\n");
+							.println("Desculpe, voce precisa criar uma conta, antes de realizar qualquer operacao!\n");
 				}
 
 				break;
 
 			case 3:
 				if (autenticado == true) {
-					System.out.println("Digite o valor de depósito: R$");
+					System.out.println("Digite o valor de deposito: R$");
 					depositoCc = sc.nextDouble();
 
 					// Lógica para o depósito na conta
-					saldoCc += depositoCc;
-					depositoCc = 0.0;
+					if (depositoCc > 0) {
+						saldoCc += depositoCc;
+						depositoCc = 0.0;
+						System.out.println("Operacao realizada com sucesso\n\n");
+						System.out.println("Seu novo saldo e: R$" + saldoCc + "\n");
+					} else {
+						System.out.println("O valor de deposito deve ser maior que zero.");
+					}
 
-					System.out.println("Operação realizada com sucesso\n\n");
-					System.out.println("Seu novo saldo é: R$" + saldoCc + "\n");
 				} else {
 					System.out
-							.println("Desculpe, você precisa criar uma conta, antes de realizar qualquer operação!\n");
+							.println("Desculpe, voce precisa criar uma conta, antes de realizar qualquer operacao!\n");
 				}
 
 				break;
 
 			case 4:
 				if (autenticado == true) {
-					System.out.println("Digite o valor que você deseja sacar: R$");
+					System.out.println("Digite o valor que voce deseja sacar: R$");
 					saqueCc = sc.nextDouble();
 
 					// Lógica para garantir que o saque não será maior que o saldo atual na cc
 					if (saqueCc > saldoCc) {
-						System.out.println("Você não possui saldo suficiente para o saque!\n");
+						System.out.println("Você nao possui saldo suficiente para o saque!\n");
 					} else {
 						saldoCc -= saqueCc;
 						saqueCc = 0.0;
-						System.out.println("Operação realizada com sucesso\n\n");
-						System.out.println("Seu novo saldo é de: R$" + saldoCc + "\n");
+						System.out.println("Operacao realizada com sucesso\n\n");
+						System.out.println("Seu novo saldo e de: R$" + saldoCc + "\n");
 					}
 				} else {
 					System.out
-							.println("Desculpe, você precisa criar uma conta, antes de realizar qualquer operação!\n");
+							.println("Desculpe, voce precisa criar uma conta, antes de realizar qualquer operacao!\n");
 				}
 
 				break;
 
 			case 5:
 				if (autenticado == true) {
-					System.out.println("Digite o valor que você deseja transferir para a conta poupança: R$");
+					System.out.println("Digite o valor que voce deseja transferir para a conta poupanca: R$");
 					depositoCp = sc.nextDouble();
 
 					// Lógica para garantir que a aplicação não será maior que o saldo atual na cc
 					if (depositoCp > saldoCc) {
-						System.out.println("Você não possui saldo suficiente para a transferência!\n");
+						System.out.println("Você nao possui saldo suficiente para a transferencia!\n");
 					} else {
 						saldoCc -= depositoCp;
 						saldoCp += depositoCp;
 						depositoCp = 0.0;
-						System.out.println("Operação realizada com sucesso\n\n");
-						System.out.println("Seu novo saldo na Conta corrente é de: R$" + saldoCc + "\n");
-						System.out.println("Seu novo saldo na Conta poupança é de: R$" + saldoCp + "\n");
+						System.out.println("Operacao realizada com sucesso\n\n");
+						System.out.println("Seu novo saldo na Conta corrente e de: R$" + saldoCc + "\n");
+						System.out.println("Seu novo saldo na Conta poupança e de: R$" + saldoCp + "\n");
 					}
 				} else {
 					System.out
-							.println("Desculpe, você precisa criar uma conta, antes de realizar qualquer operação!\n");
+							.println("Desculpe, voce precisa criar uma conta, antes de realizar qualquer operacao!\n");
 				}
 				break;
 
 			case 6:
 				if (autenticado == true) {
-					System.out.println("Digite o valor que você deseja resgatar da conta poupança: R$");
+					System.out.println("Digite o valor que voce deseja resgatar da conta poupanca: R$");
 					saqueCp = sc.nextDouble();
 
 					// Lógica para garantir que o resgate não será maior que o saldo atual na cp
 					if (saqueCp > saldoCp) {
-						System.out.println("Você não possui saldo suficiente para resgatar!\n");
+						System.out.println("Voce nao possui saldo suficiente para resgatar!\n");
 					} else {
 						saldoCp -= saqueCp;
 						saldoCc += saqueCp;
 						saqueCp = 0.0;
-						System.out.println("Operação realizada com sucesso\n\n");
-						System.out.println("Seu novo saldo na Conta corrente é de: R$" + saldoCc + "\n");
-						System.out.println("Seu novo saldo na Conta poupança é de: R$" + saldoCp + "\n");
+						System.out.println("Operacao realizada com sucesso\n\n");
+						System.out.println("Seu novo saldo na Conta corrente e de: R$" + saldoCc + "\n");
+						System.out.println("Seu novo saldo na Conta poupança e de: R$" + saldoCp + "\n");
 					}
 				} else {
 					System.out
-							.println("Desculpe, você precisa criar uma conta, antes de realizar qualquer operação!\n");
+							.println("Desculpe, voce precisa criar uma conta, antes de realizar qualquer operacao!\n");
 				}
 				break;
 
 			case 7:
 				if (autenticado == true) {
-					System.out.println("\n\nSuas contas são:\n");
+					System.out.println("\n\nSuas contas sao:\n");
 					System.out.println("Conta corrente: " + conta + "-" + dvcc + "\n");
-					System.out.println("Conta poupança: " + conta + "-" + dvcp + "\n\n");
+					System.out.println("Conta poupanca: " + conta + "-" + dvcp + "\n\n");
 				} else {
 					System.out
-							.println("Desculpe, você precisa criar uma conta, antes de realizar qualquer operação!\n");
+							.println("Desculpe, voce precisa criar uma conta, antes de realizar qualquer operacao!\n");
 				}
 				break;
 
@@ -191,13 +202,12 @@ public class Main {
 				break;
 
 			default:
-				System.out.println("\n\nOpção inválida, por favor, selecione um opção apresentada no menu\n\n");
+				System.out.println("\n\nOpcao invalida, por favor, selecione um opcao apresentada no menu\n\n");
 			}
-			
-			sc.close();
 
 		} while (testeLogico == true);
-		
-		
+
+		sc.close();
+
 	}
 }
